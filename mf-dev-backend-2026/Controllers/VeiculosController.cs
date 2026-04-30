@@ -18,5 +18,23 @@ namespace mf_dev_backend_2026.Controllers
 
             return View(dados);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Veículo veiculo)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(veiculo);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+
+            return View(veiculo);
+        }
     }
 }
