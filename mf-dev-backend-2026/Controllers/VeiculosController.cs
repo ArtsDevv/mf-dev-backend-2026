@@ -11,7 +11,7 @@ namespace mf_dev_backend_2026.Controllers
 
         public int Id { get; private set; }
 
-        public VeiculosController(AppDbContext context) 
+        public VeiculosController(AppDbContext context)
         {
             _context = context;
         }
@@ -50,7 +50,7 @@ namespace mf_dev_backend_2026.Controllers
 
             if (dados == null)
                 return NotFound();
-            
+
             return View(dados);
         }
 
@@ -72,12 +72,12 @@ namespace mf_dev_backend_2026.Controllers
 
         public async Task<IActionResult> Details(int? id)
         {
-            if(id == null)
+            if (id == null)
                 return NotFound();
 
             var dados = await _context.Veiculos.FindAsync(id);
 
-            if(dados == null)
+            if (dados == null)
                 return NotFound();
 
             return View(dados);
@@ -96,4 +96,23 @@ namespace mf_dev_backend_2026.Controllers
 
             return View(dados);
         }
+
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int? id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var dados = await _context.Veiculos.FindAsync(id);
+
+            if (dados == null)
+                return NotFound();
+
+            _context.Veiculos.Remove(dados);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
+    }
 }
